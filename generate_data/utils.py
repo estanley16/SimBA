@@ -406,50 +406,6 @@ def bspl_params_from_df(df, label, n_samples):
 
 
 
-# def composite_transform(template, effect_field, isv_field, inv_isv_field):
-#     '''
-#     composes disease/bias effect field (effect_field) with variation from IXI subject (isv_field)
-    
-#     1. create artificial subject by transforming template image with IXI subject
-#     2. apply transform composition to correctly apply the effect field in the IXI space 
-    
-#     '''
-#     warper = sitk.WarpImageFilter()
-#     warper.SetInterpolator(sitk.sitkLinear)
-#     warper.SetOutputParameteresFromImage(template)
-    
-    
-#     # create subject (transform atlas to subject)
-#     s_img = warper.Execute(template, isv_field)
-
-#     #imgs need to be 64bit vector float to get transform from them
-#     inv_isv_field = sitk.Cast(inv_isv_field, sitk.sitkVectorFloat64)
-#     effect_field = sitk.Cast(effect_field, sitk.sitkVectorFloat64)
-#     isv_field = sitk.Cast(isv_field, sitk.sitkVectorFloat64)
-
-#     #convert images to transforms
-#     inv_isv_tx = sitk.DisplacementFieldTransform(inv_isv_field)
-#     effect_tx = sitk.DisplacementFieldTransform(effect_field)
-#     isv_tx = sitk.DisplacementFieldTransform(isv_field) 
-
-
-#     # #define composite transform 
-#     # #first in - last applied
-#     comp_tx = sitk.CompositeTransform([inv_isv_tx])
-#     comp_tx.AddTransform(effect_tx)
-#     comp_tx.AddTransform(isv_tx)
-
-    
-#     #no GetDisplacementField method for CompositeTransform - need to resample to apply to image
-#     # comp_field = comp_tx.GetDisplacementField()
-#     # img = warper.Execute(template, comp_field)
-    
-#     resampler = sitk.ResampleImageFilter()
-#     resampler.SetReferenceImage(s_img)
-#     resampler.SetInterpolator(sitk.sitkBSpline)
-#     resampler.SetDefaultPixelValue(0)
-#     resampler.SetTransform(comp_tx)
-
                 
 #     img = resampler.Execute(s_img)
     

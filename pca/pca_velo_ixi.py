@@ -91,67 +91,7 @@ pickle.dump(pca_model, f)
 f.close()
 
 
-#####################################################################################
-# #test -> load pca model
-# f = open(save_dir + 'L_hippocampus_test', 'rb')
-# pca_loaded = pickle.load(f)
-# f.close()
-# b = 0 #sampling scalar 
-# sample_loaded = pca_loaded.translation_vector + pca_loaded.basis[:,0] * np.sqrt(pca_loaded.eigenvalues[0]) * b
 
-
-#####################################################################################
-# #test -> get 1st component eigenvector, sample from it, reshape into full size image
-
-# b = 0 #sampling scalar 
-# sample = pca_model.translation_vector + pca_model.basis[:,0] * np.sqrt(pca_model.eigenvalues[0]) * b
-
-# #reshape sampled component into vector of full size image 
-# sample_flattened = np.zeros_like(mask_flattened).astype('float64')
-# sample_arr = np.squeeze(np.asarray(sample)) #convert sample to insert from matrix to array
-# loc = np.nonzero(mask_flattened)[0] #locations to insert 
-# sample_flattened[loc] = sample_arr 
-
-# #reshape vector to 3d array
-# sample_3d = np.reshape(sample_flattened, mask_velo.shape, order='F')
-
-# #get sitk image from numpy array 
-# sample_itk = sitk.GetImageFromArray(sample_3d, isVector=True)
-# sitk.WriteImage(sample_itk,'/home/emma/Documents/SBB/sandbox/pca_Lhippocampus_b0_test.nii.gz')
-
-
-
-#####################################################################################
-# # test -> apply df to atlas
-# warper = sitk.WarpImageFilter()
-# warper.SetInterpolator(sitk.sitkLinear)
-# warper.SetOutputParameteresFromImage(atlas_itk)
-
-# # warped = warper.Execute(atlas_itk, sample_itk)
-# # sitk.WriteImage(warped,'/home/emma/Documents/SBB/sandbox/pca_Lhippocampus_b0_test_atlas.nii.gz')
-
-# from disp_field_utils import get_bspline_disp_field, get_velo_list, diffeomorphic_check, get_roi_bspline_params, composite_transform
-# import ants
-
-# lpath = '/home/emma/Documents/SBB/atlas/sri24_spgr_lpba40_labels_RAI_ROI.nii.gz' 
-# label = sitk.ReadImage(lpath)
-
-# img_array = sitk.GetArrayFromImage(atlas_itk).astype(float) #numpy image (z,y,x)
-# img_array = np.swapaxes(img_array,0,2) #x,y,z
-# img = ants.from_numpy(img_array) #ants image
-
-
-# inv_df_d = sitk.InvertDisplacementField(
-#                 sample_itk,
-#                 maximumNumberOfIterations=20,
-#                 maxErrorToleranceThreshold=0.01,
-#                 meanErrorToleranceThreshold=0.0001,
-#                 enforceBoundaryCondition=True)
-
-            
-# #get parametric and scattered data arrays for disease disp field
-# parametric_data_roi, scattered_data_roi = get_roi_bspline_params(inv_df_d, 166, label) #THIS FXN COULD BE MODIFIED LATER SINCE DF SHOULD ALREADY BE MASKED / ONLY HAVE INFO FROM ROI
-# df, flag = get_bspline_disp_field(img, parametric_data_roi, scattered_data_roi, meshSize=20)
 
 # bspl_warped = warper.Execute(atlas_itk, df)
 # sitk.WriteImage(bspl_warped,'/home/emma/Documents/SBB/sandbox/pca_Lhippocampus_b0_test_atlas_bspl.nii.gz')

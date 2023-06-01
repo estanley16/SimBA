@@ -76,31 +76,3 @@ f = open(save_dir + 'sri24_spgr_RAI_lpba40_' + args.savename, 'wb')
 pickle.dump(pca_model, f)
 f.close()
 
-
-#%% TESTING
-# import SimpleITK as sitk
-# import pickle 
-# import numpy as np
-
-# pca_dir = '/home/emma/Documents/SBB/pca_models/'
-# f_isv = open(pca_dir + 'sri24_spgr_RAI_lpba40_isv_only_test', 'rb')
-# pca_isv = pickle.load(f_isv)
-# f_isv.close()
-    
-# #define isv sampling distribution
-# isv_dst_mean = 0 #mean value of component for generating distribution of samples - PLACEHOLDER
-# isv_dst_sd = 1 #standard deviation for generating distirbution of samples - PLACEHOLDER
-# isv_dst = np.random.normal(isv_dst_mean, isv_dst_sd, 5)
-
-# n=0
-# df_isv_np = pca_isv.translation_vector + pca_isv.basis[:,0]*np.sqrt(pca_isv.eigenvalues[0])*isv_dst[n]
-
-
-
-
-# ref_np=sitk.GetArrayFromImage(sitk.ReadImage('/home/emma/Documents/SBB/atlas/sri24_spgr_RAI_ROI.nii.gz'))
-# ref_displ=np.repeat(ref_np[:,:,:,np.newaxis],3,axis=3)
-
-# sample_arr = np.squeeze(np.asarray(df_isv_np)) 
-# sample_3d = np.reshape(sample_arr, ref_.shape, order='F')
-# sample_itk = sitk.GetImageFromArray(sample_3d, isVector=True)

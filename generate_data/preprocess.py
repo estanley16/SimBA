@@ -97,14 +97,6 @@ def main():
 if __name__ == '__main__':
     main()
 
-#%%
-# expname = 'exp18D'
-# savedir='/home/emma/Documents/SBB/' + expname
-# test = pd.read_csv('/home/emma/Documents/SBB/'+expname+'/test.csv', index_col=0)
-# df_d_bal = get_dataset_info('/home/emma/Documents/SBB/datasets/'+expname+'_bal_D',1)
-# df_nd_bal = get_dataset_info('/home/emma/Documents/SBB/datasets/'+expname+'_bal_ND', 0)
-# test_bal = merge_shuffle_data([test,df_d_bal, df_nd_bal])
-# test_bal.to_csv(savedir + '/test_bal.csv')
 
 
 
