@@ -75,16 +75,24 @@ E.A.M. Stanley, M. Wilms, N.D. Forkert (2023) A flexible framework for simulatin
 ### Environment 
 Our dataset generation code used:
 * Python 3.10.6
-* simpleitk v. 2.1.1.1
+* simpleitk 2.1.1.1
+* antspyx 0.3.4
+* pandas 1.5.0
+* numpy 1.23.3
+* scikit-learn 1.1.2
+* scipy 1.9.1
 
-Our code for Keras model training used: 
+Our code for the Keras model pipeline used: 
 * Python 3.10.6
-* simpleitk v. 2.1.1.1
+* pandas 1.5.0
+* numpy 1.23.3
+* scikit-learn 1.1.2
+* simpleitk 2.1.1.1
 * tensorflow-gpu 2.10.0
 * cudnn 8.4.1.50
 * cudatoolkit 11.7.0
 
-And NVIDIA GeForce RTX 3090 GPU.
+GPU: NVIDIA GeForce RTX 3090
 
 Full environment in `requirements.txt`.
 
