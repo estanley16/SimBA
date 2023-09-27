@@ -4,6 +4,8 @@
 Created on Tue Jan 31 16:54:57 2023
 
 @author: emma
+
+code for fitting PCA model to full velocity fields (for inter-subject variability/subject effects)
 """
 
 # python imports

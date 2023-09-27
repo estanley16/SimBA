@@ -4,6 +4,9 @@
 Created on Mon Jan 30 10:37:41 2023
 
 @author: emma
+
+code for fitting PCA model to velocity fields of specific brain regions (for disease and bias effects)
+
 """
 
 # python imports
@@ -35,15 +38,12 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument('--velo_path', type=str, help='full directory path containing velocity fields for PCA', required=True)
-# parser.add_argument('--mask_file', type=str, help='full file path to desired ROI mask (can also be the full brain mask)', required=True)
-# parser.add_argument('--savename', type=str, help='name for saved PCA model, i.e., region value from LPBA40 atlas, or "isv"')
 parser.add_argument('--region', type=int, help='LPBA40 region value')
 parser.add_argument('--var_ret', type=float, help='variability retained in PCA model', default=1)
 args = parser.parse_args()
 
 #load region mask
 mask_dir = '/home/emma/Documents/SBB/atlas/roi_masks/'
-# mask_file=args.mask_file #ROI mask 
 mask_file = glob.glob(mask_dir + "*" + str(args.region) + ".nii.gz")[0]
 
 mask_itk=sitk.ReadImage(mask_file)
@@ -51,13 +51,9 @@ mask_np=sitk.GetArrayFromImage(mask_itk)
 mask_velo=np.repeat(mask_np[:,:,:,np.newaxis],3,axis=3) #match size of velocity field (3 directions)
 mask_flattened=np.ravel(mask_velo,order='F')
 
-# atlas_file='/home/emma/Documents/SBB/atlas/sri24_spgr_RAI_ROI.nii.gz'
-# atlas_itk=sitk.ReadImage(atlas_file)
-# atlas_np=sitk.GetArrayFromImage(atlas_itk)
 
 
 #load velocity field files
-# velo_dir='/home/emma/Documents/SBB/IXI_nonlin_disp_fields_reduced'
 velo_dir=args.velo_path
 velo_files = sorted(glob.glob(os.path.join(velo_dir, '*velo.nii.gz')))
    
@@ -92,7 +88,3 @@ f.close()
 
 
 
-
-# bspl_warped = warper.Execute(atlas_itk, df)
-# sitk.WriteImage(bspl_warped,'/home/emma/Documents/SBB/sandbox/pca_Lhippocampus_b0_test_atlas_bspl.nii.gz')
-#####################################################################################
