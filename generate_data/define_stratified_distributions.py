@@ -37,6 +37,7 @@ TOTAL_N = 2160 #total number of samples to start with
 D_FRAC = 0.5 #fraction of total samples in disease class
 MU_D = 1 #mean of distribution for disease class
 MU_ND = -1 #mean of distribution for non-disease class
+SD_D = 1 #std of effect sampling dst
 ISV = True #whether to include subject effects
 MU_S = 0 #mean of subject sampling dst
 SD_S = 1 #std of subject sampling dst
@@ -61,9 +62,17 @@ save_dir = main_dir + EXP + '/effect_distributions/'
 def get_class_distributions(seed, mu, sd, num, d_frac, lower_bound, upper_bound, bins):
     '''
     -----inputs------
-
+    -seed: seed for deterministic random number generation
+    -mu: mean value of subject effect sampling distribution
+    -sd: standard deviation of subject effect sampling distribution
+    -num: number of samples to generate
+    -d_frac: fraction of all data defined as the disease class
+    -lower_bound: lower bound of truncated gaussian distribution for subject sampling
+    -upper_bound: upper bound of truncated gaussian distribution for subject sampling
+    -bins: number of bins for subject effect stratification
     -----outputs-----
-
+    -isv_nd: subject effect distribution for the non-disease class
+    -isd_d: subject effect distribution for the disease_class
     '''
     #define subject effect distribution
     numpy_randomGen = Generator(PCG64(seed))
@@ -87,19 +96,29 @@ def get_class_distributions(seed, mu, sd, num, d_frac, lower_bound, upper_bound,
     return isv_nd, isv_d
 
 
-def data_sampling_dst(seed, mu, bias_frac, num_samples, isv, isv_dst, isv_bins, bins_d, bins_s, class_label):
+def data_sampling_dst(seed, mu, sd, bias_frac, num_samples, isv, isv_dst, isv_bins, bins_d, bins_s, class_label):
     '''
     -----inputs------
-
+    -seed: seed for deterministic random number generation
+    -mu: mean value of disease effect sampling distribution
+    -sd: standard deviation of disease effect sampling distribution
+    -bias_frac: fraction of samples in this disease class to contain bias effect
+    -num_samples: number of samples to generate for this class
+    -isv: whether or not subject effects are included in this dataset (True/False)
+    -isv_dst: stratified subject effect distribution for this class
+    -isv_bins: bin values from subject effect stratification step
+    -bins_d: number of stratificatin bins for disease effects 
+    -bins_s: number of stratification bins defined for subject effects
+    -class_label: numeric label for this disease class
     -----outputs-----
-
+    -df: dataframe with subject effects, disease effects, bias labels, and class labels for this disease class
     '''
     numpy_randomGen = Generator(PCG64(seed))
 
 
     #generate disease effect distribution
     effect_dst_mean = mu #mean value of component for generating distribution of samples
-    effect_dst_sd = 1 #standard deviation for generating distribution of samples
+    effect_dst_sd = sd #standard deviation for generating distribution of samples
     effect_dst_raw = numpy_randomGen.normal(effect_dst_mean, effect_dst_sd, num_samples) #get samples from disease effect distribution
 
     effect_bins = pd.cut(effect_dst_raw, bins=bins_d, labels=False)
@@ -150,8 +169,8 @@ NUM_D = len(isv_d)
 NUM_ND = len(isv_nd)
 
 #generate data for disease classes with bias groups stratified by subject + disease effect
-df_D = data_sampling_dst(SEED_D, MU_D, BIAS_FRAC_D, NUM_D, ISV, isv_d['isv_dst'].values, isv_d['isv_bin'].values, BINS_D, BINS_S, 1)
-df_ND = data_sampling_dst(SEED_ND, MU_ND, BIAS_FRAC_ND, NUM_ND, ISV, isv_nd['isv_dst'].values, isv_nd['isv_bin'].values, BINS_D, BINS_S, 0)
+df_D = data_sampling_dst(SEED_D, MU_D, SD_D, BIAS_FRAC_D, NUM_D, ISV, isv_d['isv_dst'].values, isv_d['isv_bin'].values, BINS_D, BINS_S, 1)
+df_ND = data_sampling_dst(SEED_ND, MU_ND, SD_D, BIAS_FRAC_ND, NUM_ND, ISV, isv_nd['isv_dst'].values, isv_nd['isv_bin'].values, BINS_D, BINS_S, 0)
 
 
 df = merge_shuffle_data([df_D, df_ND])
