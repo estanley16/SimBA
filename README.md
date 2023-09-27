@@ -4,7 +4,7 @@
 
 </div>
 
-Implementation for framework presented in our MICCAI 2023 paper: "A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis"
+Implementation for framework presented in our MICCAI 2023 paper: "[A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis](https://drive.google.com/file/d/1anxyBaTFPh-OEcGzXyhbZVXkQSMYDBl3/view?usp=drive_link)"
 
 <p align="center">
 <img src="figures/paper1779_fig1.png?raw=true" width="750">
@@ -28,7 +28,7 @@ We use PCA models fit to velocity fields (Log-Euclidian framework) derived from 
 * `pca_isv_velo_ixi.py` fits the PCA model for the full subject morphology.
 * `pca_velo_ixi.py` fits the PCA models for the localized region morphology.
 
-Our PCA models for global subject morphology as well as each region defined by the LPBA40 labels are available [here](link).
+Our PCA models for global subject morphology as well as each region defined by the LPBA40 labels are available [here](https://drive.google.com/file/d/1LQeOA1mrNZm9KbWZrj5-8ZGJpMjiAzFD/view?usp=sharing).
 
 ### Dataset generation
 Subject, disease, and bias effects are represented by morphological variation introduced to a template image (we use the SRI24 atlas). Generating the synthetic datasets requires the following files: 
@@ -43,7 +43,7 @@ Subject, disease, and bias effects are represented by morphological variation in
 
 For a fully controlled evaluation of bias in deep learning pipelines, it is recommended to generate subject- and disease effect-paired datasets of images with and without the addition of bias effects (simply comment out the addition of bias effects in `generate_data.py`). Evaluating these with- and without-bias "counterfactuals" with the exact same model training scheme (initialization seeds, GPU state, splits, batch order) and measuring bias group performance disparities relative to the without-bias "baseline" ensures the most rigorous evaluation, as models may exhibit small (<5%) levels of baseline disparity (e.g., true and false positive rates) even with effect stratification. 
 
-A sample dataset (used in our upcoming journal paper) is available for download [here](link).
+Sample datasets (used in our upcoming journal paper) are available for download [here](https://mega.nz/folder/wKNVTSqZ#4OgMoOnEFyk32CunjV-XIg).
 
 ### Model pipeline 
 We train models in Keras/Tensorflow but the generated datasets can be used with any deep learning library. Our model pipeline code is in:
@@ -57,7 +57,7 @@ We train models in Keras/Tensorflow but the generated datasets can be used with 
 ```
 
 ### Citation
-If you find this framework, code, or paper useful to your research, please cite the [paper](link):
+If you find this framework, code, or paper useful to your research, please cite the paper:
 
 ```
 @inproceedings{stanley2023framework,
