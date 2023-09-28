@@ -55,7 +55,7 @@ We train models in Keras/Tensorflow but the generated datasets can be used with 
 ```
 
 ### Citation
-If you find this framework, code, or paper useful to your research, please cite the paper:
+If you find the SimBA 🦁 framework, code, or paper useful to your research, please cite the paper:
 
 ```
 @inproceedings{stanley2023framework,
