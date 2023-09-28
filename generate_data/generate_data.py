@@ -14,7 +14,7 @@ for each split (train/val/test)
 
 notes:
 - this script samples effects from PCA models trained on velocity fields -- can be
-modified to use displacement/velocity fields from
+modified to use displacement/velocity fields from different generative models as well
 - the original script saved information about whether deformations are non-diffeomorphic
 but were removed from this version for readability. velocity/displacement fields
 can be checked for diffeomorphism with function diffeomorphic_check() in utils.py
