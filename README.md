@@ -4,7 +4,7 @@
 
 </div>
 
-Implementation for framework presented in our MICCAI 2023 paper: "[A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis](https://drive.google.com/file/d/1anxyBaTFPh-OEcGzXyhbZVXkQSMYDBl3/view?usp=drive_link)"
+Implementation for framework presented in our MICCAI 2023 paper: "[A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis](https://link.springer.com/chapter/10.1007/978-3-031-43895-0_46)"
 
 <p align="center">
 <img src="figures/paper1779_fig1.png?raw=true" width="750">
@@ -58,18 +58,19 @@ We train models in Keras/Tensorflow but the generated datasets can be used with 
 If you find the SimBA 🦁 framework, code, or paper useful to your research, please cite us!
 
 ```
-@inproceedings{stanley2023framework,
-    address = {Cham},
-    series = {Lecture {Notes} in {Computer} {Science}},
-    author = {Stanley, Emma A.M. and Wilms, Matthias and Forkert, Nils D.},
-    title = {A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis},
-    year = {2023},
-    booktitle = {Medical {Image} {Computing} and {Computer} {Assisted} {Intervention} – {MICCAI} 2023},
-    publisher = {Springer Nature Switzerland},
-    }
+@inproceedings{stanley_framework_2023,
+	address = {Cham},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	author = {Stanley, Emma A. M. and Wilms, Matthias and Forkert, Nils D.},
+	title = {A {Flexible} {Framework} for {Simulating} and {Evaluating} {Biases} in {Deep} {Learning}-{Based} {Medical} {Image} {Analysis}},
+	booktitle = {Medical {Image} {Computing} and {Computer} {Assisted} {Intervention} – {MICCAI} 2023},
+	publisher = {Springer Nature Switzerland},
+	editor = {Greenspan, Hayit and Madabhushi, Anant and Mousavi, Parvin and Salcudean, Septimiu and Duncan, James and Syeda-Mahmood, Tanveer and Taylor, Russell},
+	year = {2023},
+	pages = {489--499}}
 ```
 ```
-E.A.M. Stanley, M. Wilms, N.D. Forkert (2023) A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis. In: Proceedings of MICCAI 2023. 
+Stanley, E.A.M., Wilms, M., Forkert, N.D. (2023). A Flexible Framework for Simulating and Evaluating Biases in Deep Learning-Based Medical Image Analysis. In: Greenspan, H., et al. Medical Image Computing and Computer Assisted Intervention – MICCAI 2023. MICCAI 2023. Lecture Notes in Computer Science, vol 14221. Springer, Cham. https://doi.org/10.1007/978-3-031-43895-0_46
 ```
 
 ### Environment 
