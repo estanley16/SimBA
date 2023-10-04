@@ -14,9 +14,9 @@ python define_stratified_distributions.py
 exp=experiment_name #experiment name you used in define_stratified_distributions.py
 
 echo generating data for $exp
-python ../generate_bspline_dataset_3d_ROI_v10.py --d_roi 102 --b_roi 164 --isv 1 --split train --expname $exp
+python generate_data.py --d_roi 102 --b_roi 164 --isv 1 --split train --expname $exp
 sleep 60
-python ../generate_bspline_dataset_3d_ROI_v10.py --d_roi 102 --b_roi 164 --isv 1 --split val --expname $exp
+python generate_data.py --d_roi 102 --b_roi 164 --isv 1 --split val --expname $exp
 sleep 60
-python ../generate_bspline_dataset_3d_ROI_v10.py --d_roi 102 --b_roi 164 --isv 1 --split test --expname $exp
+python generate_data.py --d_roi 102 --b_roi 164 --isv 1 --split test --expname $exp
 sleep 60
