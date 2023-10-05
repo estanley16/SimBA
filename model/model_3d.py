@@ -80,7 +80,7 @@ def compile_model():
     model.summary()
     model.compile(loss=tf.keras.losses.CategoricalCrossentropy(), optimizer=opt, metrics=metr)
     return model
-s
+
 
 def main():
 
