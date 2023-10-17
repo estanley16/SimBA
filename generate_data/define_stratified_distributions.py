@@ -61,6 +61,8 @@ save_dir = main_dir + EXP + '/effect_distributions/'
 #function to generate sampling distributions
 def get_class_distributions(seed, mu, sd, num, d_frac, lower_bound, upper_bound, bins):
     '''
+    get dataframe with subject effects for each disease class
+    
     -----inputs------
     -seed: seed for deterministic random number generation
     -mu: mean value of subject effect sampling distribution
@@ -96,8 +98,10 @@ def get_class_distributions(seed, mu, sd, num, d_frac, lower_bound, upper_bound,
     return isv_nd, isv_d
 
 
-def data_sampling_dst(seed, mu, sd, bias_frac, num_samples, isv, isv_dst, isv_bins, bins_d, bins_s, class_label):
+def get_dataset_effects(seed, mu, sd, bias_frac, num_samples, isv, isv_dst, isv_bins, bins_d, bins_s, class_label):
     '''
+    get dataframe with effects for all subjects in dataset with corresponding bias and class labels
+    
     -----inputs------
     -seed: seed for deterministic random number generation
     -mu: mean value of disease effect sampling distribution
@@ -163,16 +167,16 @@ def data_sampling_dst(seed, mu, sd, bias_frac, num_samples, isv, isv_dst, isv_bi
 
 # --------------------------------------------------
 
-
+#get subject effect distributions for disease and non-disease classes
 isv_nd, isv_d = get_class_distributions(SEED_S, MU_S, SD_S, TOTAL_N, D_FRAC, LOWER_S, UPPER_S, BINS_S)
 NUM_D = len(isv_d)
 NUM_ND = len(isv_nd)
 
-#generate data for disease classes with bias groups stratified by subject + disease effect
-df_D = data_sampling_dst(SEED_D, MU_D, SD_D, BIAS_FRAC_D, NUM_D, ISV, isv_d['isv_dst'].values, isv_d['isv_bin'].values, BINS_D, BINS_S, 1)
-df_ND = data_sampling_dst(SEED_ND, MU_ND, SD_D, BIAS_FRAC_ND, NUM_ND, ISV, isv_nd['isv_dst'].values, isv_nd['isv_bin'].values, BINS_D, BINS_S, 0)
+#get disease effect distributions for each class, stratified within bias groups 
+df_D = get_dataset_effects(SEED_D, MU_D, SD_D, BIAS_FRAC_D, NUM_D, ISV, isv_d['isv_dst'].values, isv_d['isv_bin'].values, BINS_D, BINS_S, 1)
+df_ND = get_dataset_effects(SEED_ND, MU_ND, SD_D, BIAS_FRAC_ND, NUM_ND, ISV, isv_nd['isv_dst'].values, isv_nd['isv_bin'].values, BINS_D, BINS_S, 0)
 
-
+#full list of effects for each subject 
 df = merge_shuffle_data([df_D, df_ND])
 
 
@@ -182,23 +186,23 @@ else:
     df['strat_col'] = df['class_label'].astype(str) +'_' + df['bias_label'].astype(str) + '_' + df['effect_bin'].astype(str)
 
 
-#remove datasets with <=2 from main df
+#remove datasets with <=2 from full list, to prepare for train vs. val+test split
 x = df.strat_col.value_counts()
 bins_to_remove = x.index[x<=2].tolist()
 print('dropping {} bins during training split'.format(len(bins_to_remove)))
 df_to_split = df[~df['strat_col'].isin(bins_to_remove)]
 
-#stratified train/val/test splits
+#stratified train/val+test splits
 train, valtest = train_test_split(df_to_split, test_size = TEST_FRAC + VAL_FRAC, stratify=df_to_split[['strat_col']], random_state=42)
 
-#remove datasets with <=1 from valtest -> to add back to val
+#remove datasets with <=1 from valtest, to prepare for val vs. test split
 y = valtest.strat_col.value_counts()
 bins_to_remove = y.index[y<=1].tolist()
 print('dropping {} bins during validation split'.format(len(bins_to_remove)))
 valtest_to_split = valtest[~valtest['strat_col'].isin(bins_to_remove)]
 
+#stratified val/test splits
 val, test = train_test_split(valtest_to_split, test_size = (TEST_FRAC/(TEST_FRAC+VAL_FRAC)), stratify=valtest_to_split[['strat_col']], random_state=42)
-
 
 print('Total samples after stratification: {}'.format(len(train) + len(val) + len(test)))
 
