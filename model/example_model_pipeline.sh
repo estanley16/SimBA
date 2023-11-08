@@ -20,6 +20,8 @@ do
               python xai_3d.py --exp_name $exp --array $arr --bias_label 0 #saliency maps for non-bias group
               python xai_3d.py --exp_name $exp --array $arr --bias_label 1 #saliency maps for bias group
               python avg_saliency_maps.py --exp_name $exp --array $arr --bias 1 #average saliency maps
+              python saliency_ROIs.py --smap <path_to_avg_saliency_map> --expname $exp --group $arr --bias_label 0 #quantitative saliency scores for non-bias group
+              python saliency_ROIs.py --smap <path_to_avg_saliency_map> --expname $exp --group $arr --bias_label 1 #quantitative saliency scores for bias group
       done
 
 done
