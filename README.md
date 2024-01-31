@@ -1,6 +1,6 @@
 <div align="center">
   
-# Simulated Bias in Artifical Medical Images
+# Simulated Bias in Artificial Medical Images
 
 </div>
 
@@ -127,6 +127,6 @@ Full environment in `requirements.txt`.
 
 
 ## Resources
-* A summary of this framework was presented at the [Fairness of AI in Medical Imaging (FAIMI)](https://faimi-workshop.github.io/2023-online/) 2023 online symposium! Recording link will be posted here soon.
+* A summary of this framework was presented at the [Fairness of AI in Medical Imaging (FAIMI)](https://faimi-workshop.github.io/2023-online/) 2023 online symposium! 
 * Questions? Open an issue or send an [email](mailto:emma.stanley@ucalgary.ca?subject=SimBA).
 
