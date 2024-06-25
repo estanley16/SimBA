@@ -127,6 +127,6 @@ Full environment in `requirements.txt`.
 
 
 ## Resources
-* A summary of this framework was presented at the [Fairness of AI in Medical Imaging (FAIMI)](https://faimi-workshop.github.io/2023-online/) 2023 online symposium! 
+* A summary of this framework was presented at the [Fairness of AI in Medical Imaging (FAIMI)](https://faimi-workshop.github.io/2023-online/) 2023 online symposium, [recording link here!](https://youtu.be/CX6079aqQ4U?si=WA5iPE8wq6sHNetG)
 * Questions? Open an issue or send an [email](mailto:emma.stanley@ucalgary.ca?subject=SimBA).
 
