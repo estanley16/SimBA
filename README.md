@@ -9,26 +9,10 @@
 </p>
 
 
-Implementation for framework presented in our MICCAI 2023 paper: "[A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis](https://link.springer.com/chapter/10.1007/978-3-031-43895-0_46)" and utilized in our preprint "[Towards objective and systematic evaluation of bias in medical imaging AI](https://arxiv.org/abs/2311.02115)".
+Implementation for framework presented in our MICCAI 2023 paper: "[A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis](https://link.springer.com/chapter/10.1007/978-3-031-43895-0_46)" and utilized in our journal paper "[Towards objective and systematic evaluation of bias in artificial intelligence for medical imaging](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447)".
 
 Our code here is based on our initial feasibility study of spatially localized morphological bias effects in structural neuroimaging datasets. However, the crux of the SimBA framework is the **systematic augmentation of a template image with disease (target) effects, bias effects, and subject effects**. This simple procedure can be expanded to other organ templates and imaging modalities. 
 
-If you find the SimBA 🦁 framework, code, or paper useful to your research, please cite us!
-```
-@inproceedings{stanley_framework_2023,
-	address = {Cham},
-	series = {Lecture {Notes} in {Computer} {Science}},
-	author = {Stanley, Emma A. M. and Wilms, Matthias and Forkert, Nils D.},
-	title = {A {Flexible} {Framework} for {Simulating} and {Evaluating} {Biases} in {Deep} {Learning}-{Based} {Medical} {Image} {Analysis}},
-	booktitle = {Medical {Image} {Computing} and {Computer} {Assisted} {Intervention} – {MICCAI} 2023},
-	publisher = {Springer Nature Switzerland},
-	editor = {Greenspan, Hayit and Madabhushi, Anant and Mousavi, Parvin and Salcudean, Septimiu and Duncan, James and Syeda-Mahmood, Tanveer and Taylor, Russell},
-	year = {2023},
-	pages = {489--499}}
-```
-```
-Stanley, E.A.M., Wilms, M., Forkert, N.D. (2023). A Flexible Framework for Simulating and Evaluating Biases in Deep Learning-Based Medical Image Analysis. In: Greenspan, H., et al. Medical Image Computing and Computer Assisted Intervention – MICCAI 2023. MICCAI 2023. Lecture Notes in Computer Science, vol 14221. Springer, Cham. https://doi.org/10.1007/978-3-031-43895-0_46
-```
 
 ### Abstract 
 Despite the remarkable advances in deep learning for medical image analysis, it has become evident that biases in datasets used for training such models pose considerable challenges for a clinical deployment, including fairness and domain generalization issues. Although the development of bias mitigation techniques has become ubiquitous, the nature of inherent and unknown biases in real-world medical image data prevents a comprehensive understanding of algorithmic bias when developing deep learning models and bias mitigation methods. To address this challenge, we propose a modular and customizable framework for bias simulation in synthetic but realistic medical imaging data. Our framework provides complete control and flexibility for simulating a range of bias scenarios that can lead to undesired model performance and shortcut learning. In this work, we demonstrate how this framework can be used to simulate morphological biases in neuroimaging data for disease classification with a convolutional neural network as a first feasibility analysis. Using this case example, we show how the proportion of bias in the disease class and proximity between disease and bias regions can affect model performance and explainability results. The proposed framework provides the opportunity to objectively and comprehensively study how biases in medical image data affect deep learning pipelines, which will facilitate a better understanding of how to responsibly develop models and bias mitigation methods for clinical use.
@@ -84,7 +68,7 @@ We train models in Keras/Tensorflow but the generated datasets can be used with 
 Example shell script for running our model pipeline in `example_model_pipeline.sh`.
 
 ### Bias mitigation 
-We evaluate the following bias mitigation strategies in the [full paper](https://arxiv.org/abs/2311.02115): [reweighing](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=595538decb1228a9fbeb0a1df3581c64dea95dd7), [unlearning](https://www.sciencedirect.com/science/article/pii/S1053811920311745), and [bias group models](https://link.springer.com/chapter/10.1007/978-3-030-87199-4_39). 
+We evaluate the following bias mitigation strategies in the [full paper](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447): [reweighing](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=595538decb1228a9fbeb0a1df3581c64dea95dd7), [unlearning](https://www.sciencedirect.com/science/article/pii/S1053811920311745), and [bias group models](https://link.springer.com/chapter/10.1007/978-3-030-87199-4_39). 
 Our main code for each of these strategies is in: 
 ```bash
 ├── bias_mitigation
@@ -100,6 +84,40 @@ Our main code for each of these strategies is in:
 * **Reweighing** follows the same standard model pipeline as [above](#model-pipeline), with `model_3d.py` replaced with `model_3d_reweigh.py` (which loads `datagenerator_3d_reweigh.py`).
 * **Unlearning** requires models pre-trained on the main task (disease classification) and the bias prediction task. The pre-trained feature encoder, disease prediction head, and bias prediction head are then split as done in `split_encoder_prediction.py`. Then, `unlearning.py` (loads `datagenerator_3d_unlearning.py`) performs the adversarial training for unlearning the bias attribute while keeping disease clasification performance high. The encoder and prediction heads are stitched back together for evaluation as done in `evaluate_3d_unlearning.py`. 
 * **Bias group models** begins with pre-training the model for a few epochs on the full dataset, and then running `model_3d_protectedgroupmodel.py` on each of the bias groups separately.
+
+## Citations
+If you find the SimBA 🦁 framework, code, or paper useful to your research, please cite us!
+
+Journal Paper:
+```
+@article{Stanley_Towards_2024,
+	title={Towards objective and systematic evaluation of bias in artificial intelligence for medical imaging},
+	DOI={10.1093/jamia/ocae165},
+	journal={Journal of the American Medical Informatics Association},
+	author={Stanley, Emma A M and Souza, Raissa and Winder, Anthony J and Gulve, Vedant and Amador, Kimberly and Wilms, Matthias and Forkert, Nils D},
+	year={2024},
+	pages={ocae165} }
+```
+```
+Stanley, E.A.M., Souza, R., Winder, A.J., Gulve, V., Amador, K., Wilms, M., Forkert, N.D. (2024). Towards objective and systematic evaluation of bias in artificial intelligence for medical imaging, Journal of the American Medical Informatics Association, ocae165, https://doi.org/10.1093/jamia/ocae165
+```
+
+MICCAI Paper:
+```
+@inproceedings{stanley_framework_2023,
+	address = {Cham},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	author = {Stanley, Emma A. M. and Wilms, Matthias and Forkert, Nils D.},
+	title = {A {Flexible} {Framework} for {Simulating} and {Evaluating} {Biases} in {Deep} {Learning}-{Based} {Medical} {Image} {Analysis}},
+	booktitle = {Medical {Image} {Computing} and {Computer} {Assisted} {Intervention} – {MICCAI} 2023},
+	publisher = {Springer Nature Switzerland},
+	editor = {Greenspan, Hayit and Madabhushi, Anant and Mousavi, Parvin and Salcudean, Septimiu and Duncan, James and Syeda-Mahmood, Tanveer and Taylor, Russell},
+	year = {2023},
+	pages = {489--499}}
+```
+```
+Stanley, E.A.M., Wilms, M., Forkert, N.D. (2023). A Flexible Framework for Simulating and Evaluating Biases in Deep Learning-Based Medical Image Analysis. In: Greenspan, H., et al. Medical Image Computing and Computer Assisted Intervention – MICCAI 2023. MICCAI 2023. Lecture Notes in Computer Science, vol 14221. Springer, Cham. https://doi.org/10.1007/978-3-031-43895-0_46
+```
 
 ## Environment 
 Our dataset generation code used:
