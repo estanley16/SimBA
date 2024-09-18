@@ -28,7 +28,7 @@ import argparse
 from pathlib import Path
 import pandas as pd
 import utils
-from numpy.random import Generator, PCG64s
+from numpy.random import Generator, PCG64
 
 # ----------------------------------------
 #                arguments

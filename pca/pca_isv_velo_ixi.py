@@ -50,6 +50,7 @@ velo_files = sorted(glob.glob(os.path.join(velo_dir, '*velo.nii.gz')))
    
 #directory for saving pca models 
 save_dir = '/home/emma/Documents/SBB/pca_models_velo_50/'
+os.makedirs(save_dir, exist_ok=True)
 
 data_matrix_velo=None
 

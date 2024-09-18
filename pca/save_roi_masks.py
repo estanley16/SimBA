@@ -9,6 +9,7 @@ Created on Fri Feb  3 10:34:13 2023
 import numpy as np 
 import pandas as pd
 import SimpleITK as sitk
+import os
 
 def get_mask(label_atlas, region_val):
     thresh_filter = sitk.BinaryThresholdImageFilter()
@@ -27,6 +28,7 @@ dfpath = '/home/emma/Documents/SBB/atlas/LPBA40-labels.csv'
 df = pd.read_csv(dfpath)
 
 savepath = '/home/emma/Documents/SBB/atlas/roi_masks/'
+os.makedirs(savepath, exist_ok=True)
 
 region_vals = df['0'].tolist()
 

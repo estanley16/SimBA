@@ -10,10 +10,10 @@ python save_roi_masks.py
 while IFS="," read -r col1 col2 col3 col4 col5
 do
         echo "generating PCA model for region: $col1"
-        python pca_velo_ixi.py --velo_path velo_path --region $col1
+        python pca_velo_ixi.py --velo_path $velo_path --region $col1
 
-done < <(tail -n +2 labels_path)
+done < <(tail -n +2 $labels_path)
 
 
 #generate pca model for global subject morphology / inter-subject variability
-python pca_isv_velo_ixi.py --velo_path velo_path --savename isv
+python pca_isv_velo_ixi.py --velo_path $velo_path --savename isv
