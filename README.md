@@ -32,7 +32,7 @@ We use PCA models fit to velocity fields (Log-Euclidian framework) derived from 
 * `pca_isv_velo_ixi.py` fits the PCA model for the full subject morphology.
 * `pca_velo_ixi.py` fits the PCA models for the localized region morphology.
 
-Our PCA models for global subject morphology as well as each region defined by the LPBA40 labels are available [here](https://drive.google.com/file/d/1LQeOA1mrNZm9KbWZrj5-8ZGJpMjiAzFD/view?usp=sharing).
+Our PCA models for global subject morphology as well as each region defined by the LPBA40 labels are available [here](https://drive.google.com/drive/folders/1JE-7bzLat8mS2VyzY0YLUUi3R5BpEDyB?usp=sharing).
 
 Example shell script for generating PCA models in `example_pca.sh`.
 
