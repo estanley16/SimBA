@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 """
-Created on Wed May 31 14:48:35 2023
-
 @author: emma
 
-from generate_bspline_dataset_3d_ROI_v10.py
-*modifying to introduce combination of intensity + morph bias
+With more than one bias subgroup in each disease class, stratification is more complicated because we need to ensure that *each* bias subgroup has the same distribution of disease and subject effects (otherwise, there are distribution shift-related biases that will also manifest in deep learning pipelines).
 
+The general steps for this are:
+1. Define distribution of subject effects, such that this distribution is the same in each disease class. 
+2. Define distribution of disease effects for each class.
+3. Perform stratified splitting of simulated "subjects" (defined by disease + subject effects) into each bias subgroup.
 
 """
 
