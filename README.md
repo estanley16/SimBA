@@ -9,7 +9,7 @@
 </p>
 
 
-Implementation for framework presented in our MICCAI 2023 paper: "[A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis](https://link.springer.com/chapter/10.1007/978-3-031-43895-0_46)" and utilized in our journal paper "[Towards objective and systematic evaluation of bias in artificial intelligence for medical imaging](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447)".
+Implementation for framework presented in our MICCAI 2023 paper: "[A flexible framework for simulating and evaluating biases in deep learning-based medical image analysis](https://link.springer.com/chapter/10.1007/978-3-031-43895-0_46)" and utilized in our journal papers "[Towards objective and systematic evaluation of bias in artificial intelligence for medical imaging](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447)" and "[Where, why, and how is bias learned in medical image analysis models? A study of bias encoding within convolutional networks using synthetic data](https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(24)00537-1/fulltext)"
 
 Our code here is based on our initial feasibility study of spatially localized morphological bias effects in structural neuroimaging datasets. However, the crux of the SimBA framework is the **systematic augmentation of a template image with disease (target) effects, bias effects, and subject effects**. This simple procedure can be expanded to other organ templates and imaging modalities. 
 
@@ -36,21 +36,39 @@ Our PCA models for global subject morphology as well as each region defined by t
 
 Example shell script for generating PCA models in `example_pca.sh`.
 
-### Dataset generation
-Subject, disease, and bias effects are represented by morphological variation introduced to a template image (we use the SRI24 atlas). Generating the synthetic datasets requires the following files: 
+### Dataset generation: Single bias
+Subject, disease, and bias effects are represented by morphological variation introduced to a template image (we use the SRI24 atlas). Generating synthetic datasets **that contain a single bias subgroup within each class in a binary classification task** requires the following files: 
 ```bash
 ├── generate_data
 │   ├── define_stratified_distributions.py
 │   ├── generate_data.py
+│   ├── kernels.py
+│   ├── subspacemodels.py
+│   ├── pca_utils.py
 │   └── utils.py
 ```
 * `defined_stratified_distributions.py` generates parameters for the train, validation, and test splits in which disease classes, bias groups, and splits are stratified by subject and disease effect magnitude values to be sampled from the respective PCA models. This controls for "bias" in the underlying distributions of subject + disease effects in each disease class and bias group that deep learning models can pick up on. The number of samples and bounds of the sampling distributions for disease and subject effects are defined in this code.
 * `generate_data.py` generates the data for each pre-defined split in `.nii.gz` format. Disease and bias regions are defined in this code.
 
-⭐ For a fully controlled evaluation of bias in deep learning pipelines, it is recommended to generate subject- and disease effect-paired datasets of images with and without the addition of bias effects (simply comment out the addition of bias effects in `generate_data.py`). **Evaluating these with- and without-bias "counterfactuals" with the exact same model training scheme (initialization seeds, GPU state, splits, batch order) and measuring bias group performance disparities relative to the without-bias "baseline" ensures the most rigorous evaluation**, as models may exhibit small (<5%) levels of baseline disparity (i.e., true and false positive rates) even with effect stratification. Sample "counterfactual" datasets (used in our [full paper](https://arxiv.org/abs/2311.02115)) are available for download [here](https://mega.nz/folder/wKNVTSqZ#4OgMoOnEFyk32CunjV-XIg).
+⭐ For a fully controlled evaluation of bias effects in deep learning pipelines, it is recommended to generate subject- and disease effect-paired datasets of images with and without the addition of bias effects (simply comment out the addition of bias effects in `generate_data.py`). **Evaluating these with- and without-bias "counterfactuals" with the exact same model training scheme (initialization seeds, GPU state, splits, batch order) and measuring bias group performance disparities relative to the without-bias "baseline" ensures the most rigorous evaluations**, as models may exhibit small (<5%) levels of baseline disparity (i.e., true and false positive rates) since stratification is not 100% precise due to discrete sampling. ⭐
+
+The datasets (used in our [JAMIA paper](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447)) are available for download [here](https://mega.nz/folder/wKNVTSqZ#4OgMoOnEFyk32CunjV-XIg).
 
 Example shell script for generating data in `example_generate_data.sh`.
 
+### Dataset generation: Multiple biases
+Generating synthetic datasets with **multiple bias subgroups within each class in a binary classification task** is more complicated, as additional stratification needs to be performed to ensure that all bias subgroups have the same underlying distributions of subject + disease effects. This requires the following files:
+```bash
+├── generate_data
+│   ├── define_multiple_stratified_distributions.py
+│   ├── generate_data_multibias.py
+│   ├── kernels.py
+│   ├── subspacemodels.py
+│   ├── pca_utils.py
+│   └── utils.py
+```
+
+The data (used in our [eBioMedicine paper](https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(24)00537-1/fulltext)) can be found [here](https://mega.nz/folder/AxAj2Aab#jUJeRAB4TGvaMT5VCdGtOQ).
 
 ## Evaluating Deep Learning Pipelines
 
@@ -68,7 +86,7 @@ We train models in Keras/Tensorflow but the generated datasets can be used with 
 Example shell script for running our model pipeline in `example_model_pipeline.sh`.
 
 ### Bias mitigation 
-We evaluate the following bias mitigation strategies in the [full paper](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447): [reweighing](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=595538decb1228a9fbeb0a1df3581c64dea95dd7), [unlearning](https://www.sciencedirect.com/science/article/pii/S1053811920311745), and [bias group models](https://link.springer.com/chapter/10.1007/978-3-030-87199-4_39). 
+We evaluate the following bias mitigation strategies in the [JAMIA paper](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447): [reweighing](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=595538decb1228a9fbeb0a1df3581c64dea95dd7), [unlearning](https://www.sciencedirect.com/science/article/pii/S1053811920311745), and [bias group models](https://link.springer.com/chapter/10.1007/978-3-030-87199-4_39). 
 Our main code for each of these strategies is in: 
 ```bash
 ├── bias_mitigation
@@ -81,7 +99,7 @@ Our main code for each of these strategies is in:
 │   ├── evaluate_3d_unlearning.py
 │   └── model_3d_protectedgroupmodel.py
 ```
-* **Reweighing** follows the same standard model pipeline as [above](#model-pipeline), with `model_3d.py` replaced with `model_3d_reweigh.py` (which loads `datagenerator_3d_reweigh.py`).
+* **Reweighing** follows the same standard model pipeline as above, with `model_3d.py` replaced with `model_3d_reweigh.py` (which loads `datagenerator_3d_reweigh.py`).
 * **Unlearning** requires models pre-trained on the main task (disease classification) and the bias prediction task. The pre-trained feature encoder, disease prediction head, and bias prediction head are then split as done in `split_encoder_prediction.py`. Then, `unlearning.py` (loads `datagenerator_3d_unlearning.py`) performs the adversarial training for unlearning the bias attribute while keeping disease clasification performance high. The encoder and prediction heads are stitched back together for evaluation as done in `evaluate_3d_unlearning.py`. 
 * **Bias group models** begins with pre-training the model for a few epochs on the full dataset, and then running `model_3d_protectedgroupmodel.py` on each of the bias groups separately.
 
