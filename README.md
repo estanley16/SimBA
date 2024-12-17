@@ -52,7 +52,6 @@ Subject, disease, and bias effects are represented by morphological variation in
 
 ⭐ For a fully controlled evaluation of bias effects in deep learning pipelines, it is recommended to generate subject- and disease effect-paired datasets of images with and without the addition of bias effects (simply comment out the addition of bias effects in `generate_data.py`). **Evaluating these with- and without-bias "counterfactuals" with the exact same model training scheme (initialization seeds, GPU state, splits, batch order) and measuring bias group performance disparities relative to the without-bias "baseline" ensures the most rigorous evaluations**, as models may exhibit small (<5%) levels of baseline disparity (i.e., true and false positive rates) since stratification is not 100% precise due to discrete sampling. ⭐
 
-The datasets (used in our [JAMIA paper](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447)) are available for download [here](https://mega.nz/folder/wKNVTSqZ#4OgMoOnEFyk32CunjV-XIg).
 
 Example shell script for generating data in `example_generate_data.sh`.
 
@@ -68,7 +67,6 @@ Generating synthetic datasets with **multiple bias subgroups within each class i
 │   └── utils.py
 ```
 
-The data (used in our [eBioMedicine paper](https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(24)00537-1/fulltext)) can be found [here](https://mega.nz/folder/AxAj2Aab#jUJeRAB4TGvaMT5VCdGtOQ).
 
 ## Evaluating Deep Learning Pipelines
 
