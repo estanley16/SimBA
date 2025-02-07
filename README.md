@@ -101,6 +101,9 @@ Our main code for each of these strategies is in:
 * **Unlearning** requires models pre-trained on the main task (disease classification) and the bias prediction task. The pre-trained feature encoder, disease prediction head, and bias prediction head are then split as done in `split_encoder_prediction.py`. Then, `unlearning.py` (loads `datagenerator_3d_unlearning.py`) performs the adversarial training for unlearning the bias attribute while keeping disease clasification performance high. The encoder and prediction heads are stitched back together for evaluation as done in `evaluate_3d_unlearning.py`. 
 * **Bias group models** begins with pre-training the model for a few epochs on the full dataset, and then running `model_3d_protectedgroupmodel.py` on each of the bias groups separately.
 
+## Data Availability 
+Datasets used in "[Towards objective and systematic evaluation of bias in artificial intelligence for medical imaging](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447)" are available for download [**here**](https://doi.org/10.5683/SP3/0A1IA0).
+
 ## Citations
 If you find the SimBA 🦁 framework, code, or paper useful to your research, please cite us!
 
