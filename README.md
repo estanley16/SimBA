@@ -104,6 +104,8 @@ Our main code for each of these strategies is in:
 ## Data Availability 
 Datasets used in "[Towards objective and systematic evaluation of bias in artificial intelligence for medical imaging](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocae165/7701447)" are available for download [**here**](https://doi.org/10.5683/SP3/0A1IA0).
 
+Datasets used in "[Where, why, and how is bias learned in medical image analysis models? A study of bias encoding within convolutional networks using synthetic data](https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(24)00537-1/fulltext)" are available for download [**here**](https://doi.org/10.5683/SP3/A9SOBZ).
+
 ## Citations
 If you find the SimBA 🦁 framework, code, or paper useful to your research, please cite us!
 
